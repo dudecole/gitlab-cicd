@@ -1,0 +1,39 @@
+stages: 
+  - staging
+  - staging-admin    
+  - production
+
+.deploy-base:
+  image: quay.io/dcole/controller-configuration:dev #<--could eventually create stage/tags and use $ENV instead of 'dev'
+  script:
+    - ansible-playbook -i localhost, controller-configuration.yml -e "env='$ENV' controller_username=$CONTROLLER_USERNAME controller_password=$CONTROLLER_PASSWORD controller_hostname=$CONTROLLER_URL controller_validate_certs=false" -vvv
+
+staging-job:      # This job runs in staging environment.
+  stage: staging  # It only runs when *both* jobs in the test stage complete successfully.
+  environment: 
+    name: controller1
+    url: http://192.168.59.10
+  variables:
+    ENV: "staging"
+    CONTROLLER_URL: $CONTROLLER_URL_STAGING
+    CONTROLLER_PASSWORD: $CONTROLLER_PASSWORD_STAGING
+    CONTROLLER_USERNAME: $CONTROLLER_USERNAME_STAGING
+  extends: .deploy-base
+
+staging-admin-job:      # This job runs in the staging-admin environment.
+  stage: staging-admin  # It only runs when *both* jobs in the test stage complete successfully.
+  environment: 
+    name: controller2
+    url: http://192.168.69.10
+  variables:
+    ENV: "staging-admin"
+  extends: .deploy-base
+
+production-job:      # This job runs in the production stage.
+  stage: production  # It only runs when *both* jobs in the test stage complete successfully.
+  environment: 
+    name: controller3
+    url: http://192.168.79.10
+  variables:
+    ENV: "production"
+  extends: .deploy-base

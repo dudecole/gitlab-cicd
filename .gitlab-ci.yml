@@ -41,4 +41,7 @@ production-job:      # This job runs in the production stage.
     url: $CONTROLLER_URL_PRODUCTION #<-these should probably be vars in gitlab -> $CONTROLLER_URL
   variables:
     ENV: "production"
+    CONTROLLER_URL: $CONTROLLER_URL_PRODUCTION
+    CONTROLLER_PASSWORD: $CONTROLLER_PASSWORD_PRODUCTION
+    CONTROLLER_USERNAME: $CONTROLLER_USERNAME_PRODUCTION
   extends: .deploy-base

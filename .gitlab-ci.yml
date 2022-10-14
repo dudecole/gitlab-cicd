@@ -29,6 +29,9 @@ staging-admin-job:      # This job runs in the staging-admin environment.
     url: $CONTROLLER_URL_STAGING_ADMIN #<-these should probably be vars in gitlab -> $CONTROLLER_URL
   variables:
     ENV: "staging-admin"
+    CONTROLLER_URL: $CONTROLLER_URL_STAGING
+    CONTROLLER_PASSWORD: $CONTROLLER_PASSWORD_STAGING_ADMIN
+    CONTROLLER_USERNAME: $CONTROLLER_USERNAME_STAGING_ADMIN
   extends: .deploy-base
 
 production-job:      # This job runs in the production stage.

@@ -14,7 +14,7 @@ staging-job:      # This job runs in staging environment.
   stage: staging  
   environment: 
     name: controller1 #<-these should probably be vars in gitlab -> $ENV or something else
-    url: http://192.168.59.10 #<-these should probably be vars in gitlab -> $CONTROLLER_URL
+    url: $CONTROLLER_URL_STAGING #<-these should probably be vars in gitlab -> $CONTROLLER_URL
   variables:
     ENV: "staging"
     CONTROLLER_URL: $CONTROLLER_URL_STAGING
@@ -26,7 +26,7 @@ staging-admin-job:      # This job runs in the staging-admin environment.
   stage: staging-admin  
   environment: 
     name: controller2 #<-these should probably be vars in gitlab -> $ENV or something else
-    url: http://192.168.69.10 #<-these should probably be vars in gitlab -> $CONTROLLER_URL
+    url: $CONTROLLER_URL_STAGING_ADMIN #<-these should probably be vars in gitlab -> $CONTROLLER_URL
   variables:
     ENV: "staging-admin"
   extends: .deploy-base
@@ -35,7 +35,7 @@ production-job:      # This job runs in the production stage.
   stage: production  
   environment: 
     name: controller3 #<-these should probably be vars in gitlab -> $ENV or something else
-    url: http://192.168.79.10 #<-these should probably be vars in gitlab -> $CONTROLLER_URL
+    url: $CONTROLLER_URL_PRODUCTION #<-these should probably be vars in gitlab -> $CONTROLLER_URL
   variables:
     ENV: "production"
   extends: .deploy-base

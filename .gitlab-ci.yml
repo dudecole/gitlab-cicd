@@ -4,6 +4,8 @@ stages:
   - production
 
 .deploy-base:
+  rules:
+    - when: manual 
   image: quay.io/dcole/controller-configuration:dev #<--could eventually create stage/tags and use $ENV instead of 'dev'
   script:
     - ansible-playbook -i localhost, controller-configuration.yml -e "env='$ENV' controller_username=$CONTROLLER_USERNAME controller_password=$CONTROLLER_PASSWORD controller_hostname=$CONTROLLER_URL controller_validate_certs=false" -vvv
